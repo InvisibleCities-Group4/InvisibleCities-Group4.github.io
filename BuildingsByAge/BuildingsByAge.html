@@ -1,0 +1,690 @@
+<html style=""><head>
+    <title>Animation | CARTO VL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <script src="https://libs.cartocdn.com/carto-vl/v1.2.5/carto-vl.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+  
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js'></script>
+    <!-- D3.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,200,400,500" rel="stylesheet">
+	<link href= 'https://fonts.googleapis.com/css?family=Work Sans|Droid+Serif:bold' rel='stylesheet';>
+    <link href="BuildingsByAge.css" rel="stylesheet">
+    <style type="text/css">
+        aside.toolbox {
+            right: 96px;
+        }
+
+        .box {
+            width: 440px;
+            background: rgba(255,255,255,0.7);
+			margin: 0 0 15px;
+        }
+		
+        section {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        hr {
+            margin: 10px auto;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            border: 1px solid white;
+            background: transparent;
+            border: none;
+
+            cursor: pointer;
+            flex: 1;
+            padding: auto 10px;
+
+            margin: auto 5px;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            height: 3px;
+            background: #1785FB;
+            border: none;
+            border-radius: 3px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            border: none;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            background: #1785FB;
+            margin-top: -4px;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-moz-range-track {
+            height: 3px;
+            background: #1785FB;
+            border: none;
+            border-radius: 3px;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            border: none;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            background: #1785FB;
+        }
+
+        input[type=range].white-thumb::-moz-range-thumb {
+            border-radius: 50%;
+            border: 2px solid #1785FB;
+            background: white;
+            height: 12px;
+            width: 12px;
+        }
+
+        input[type=range].white-thumb::-webkit-slider-thumb {
+            border-radius: 50%;
+            border: 3px solid #1785FB;
+            background: white;
+            height: 15px;
+            width: 15px;
+            margin-top: -6px;
+        }
+
+        input[type=range].white-thumb::-ms-thumb {
+            border-radius: 50%;
+            border: 2px solid #1785FB;
+            background: white;
+            height: 12px;
+            width: 12px;
+        }
+
+        input[type=range]:-moz-focusring {
+            outline: 1px solid white;
+            outline-offset: -1px;
+        }
+
+        input[type=range]::-ms-track {
+            height: 3px;
+            background: transparent;
+            border-color: transparent;
+            border-width: 6px 0;
+            color: transparent;
+        }
+
+        input[type=range]::-ms-fill-lower {
+            background: #1785FB;
+        }
+
+        input[type="range"]::-moz-range-progress {
+            background: #1785FB;
+        }
+
+        input[type=range]::-ms-fill-upper {
+            background: #ccc;
+        }
+
+        input[type="range"]::-moz-range-track {
+            background: #ccc;
+        }
+
+        input[type=range]::-ms-thumb {
+            border: none;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            background: #1785FB;
+        }
+
+        input[type="button"] {
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            border: 0;
+            box-shadow: none;
+            color: #fff;
+            cursor: pointer;
+            display: inline-flex;
+            font: 500 12px/20px 'Roboto';
+            margin: 0;
+            margin-right: 10px;
+        }
+
+        #map {
+            flex: 1;
+        }
+
+        #js-duration-span {
+            background: white;
+            border: 1px solid #ddd;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #js-play-button {
+            background: url('./play.png') no-repeat;
+            background-color: #1785FB;
+            background-position: center;
+        }
+
+        #js-pause-button {
+            background: url('./pause.png') no-repeat;
+            background-color: #1785FB;
+            background-position: center;
+        }
+      h1{
+        font-size:2vw
+      }
+      
+    </style>
+</head>
+
+<body>
+    <div id="map" class="mapboxgl-map"><div class="mapboxgl-canary" style="visibility: hidden;"></div><div class="mapboxgl-canvas-container mapboxgl-interactive mapboxgl-touch-drag-pan mapboxgl-touch-zoom-rotate"><canvas class="mapboxgl-canvas" tabindex="0" aria-label="Map" width="1385" height="879" style="position: absolute; width: 1385px; height: 879px;"></canvas></div><div class="mapboxgl-control-container"><div class="mapboxgl-ctrl-top-left"><div class="mapboxgl-ctrl mapboxgl-ctrl-group"><button class="mapboxgl-ctrl-icon mapboxgl-ctrl-zoom-in" type="button" title="Zoom in" aria-label="Zoom in"></button><button class="mapboxgl-ctrl-icon mapboxgl-ctrl-zoom-out" type="button" title="Zoom out" aria-label="Zoom out"></button><button class="mapboxgl-ctrl-icon mapboxgl-ctrl-compass" type="button" title="Reset bearing to north" aria-label="Reset bearing to north"><span class="mapboxgl-ctrl-compass-arrow" style="transform: rotate(0deg);"></span></button></div></div><div class="mapboxgl-ctrl-top-right"></div><div class="mapboxgl-ctrl-bottom-left"><div class="mapboxgl-ctrl" style="display: none;"><a class="mapboxgl-ctrl-logo" target="_blank" href="https://www.mapbox.com/" aria-label="Mapbox logo" rel="noopener"></a></div></div><div class="mapboxgl-ctrl-bottom-right"><div class="mapboxgl-ctrl mapboxgl-ctrl-attrib"><div class="mapboxgl-ctrl-attrib-inner"><a href="http://carto.com/" target="_blank">© CARTO</a> <a href="http://www.openstreetmap.org/about/" target="_blank">© OpenStreetMap contributors</a></div></div></div></div></div>
+	<nav id="menu"></nav>
+    <!-- Animation control elements -->
+    <aside class="toolbox">
+        <div class="box">
+            <header>
+                <h1 style="font-family: 'Work Sans';">Paris Buildings by Age</h1>
+            </header>
+            <section style="margin-top: 15px;">
+                <input type="button" id="js-play-button">
+                <input type="button" id="js-pause-button" >
+                <input type="range" id="js-time-range" min="0" max="1" step="0.01">
+            </section>
+            <br>
+            <section>
+                <span id="js-current-time" class="Time"></span>
+            </section>
+			<section>
+             <div id="controls">
+              <p id="content-title"></p>
+               <ul id="content">
+		        <li id="Before 1800"><span class="polygon-mark" style="background-color:#FFF0F5"></span> <span>Before 1800</span></li>
+                <li id="1801-1850"><span class="polygon-mark" style="background-color:#DC143C"></span>1801-1850</li>
+                <li id="1851-1914"><span class="polygon-mark" style="background-color:#6495ED"></span> <span>1851-1914</span></li>
+                <li id="1915-1939"><span class="polygon-mark" style="background-color:#ff8050"></span> <span>1915-1939</span></li>
+                <li id="1940-1967"><span class="polygon-mark" style="background-color:#ff9631"></span> <span>1940-1967</span></li>
+				<li id="1968-1975"><span class="polygon-mark" style="background-color:#ffa900"></span> <span>1968-1975</span></li>
+				<li id="1976-1981"><span class="polygon-mark" style="background-color:#ffbb00"></span> <span>1976-1981</span></li>
+				<li id="1982-1989"><span class="polygon-mark" style="background-color:#ffcd00"></span> <span>1982-1989</span></li>
+				<li id="1990-1999"><span class="polygon-mark" style="background-color:#ffde00"></span> <span>1990-1999</span></li>
+				<li id="2000-2007"><span class="polygon-mark" style="background-color:#20b2aa"></span> <span>2000-2007</span></li>
+				<li id="After 2008"><span class="polygon-mark" style="background-color:#90ee90"></span> <span>After 2008</span></li>
+				
+              </ul>
+            </div>
+            </section>
+            <hr>
+            <section style="height:30px">
+                <span style="margin-right: 5px" class="open-sans">Duration (seconds)</span>
+                <input class="white-thumb" type="range" id="js-duration-range" min="1" max="60" step="1">
+                <span style="margin-left: 5px" class="open-sans" id="js-duration-span">10</span>
+            </section>
+			
+<div class='info' id="Before 1800-info" style="display:none">
+<h3 style="font-family: 'Work Sans'; font-size: 16px;">The Medieval Period: 1100-1526</h3>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">Most surviving medieval architecture in France is religious. By the 1100s, three unique engineering improvements appeared in Paris and France and created a new, Gothic style. These three innovations were: pointed arches, which can carry more weight than Romanesque round arches; cross vaults, or X-shaped ribbing growing up from columns inside the arch, for better support; and flying buttresses, which channel the weight of the roof and walls to the ground, allowing walls to be thinner and opening them up for windows. </p>
+<h3 style="font-family: 'Work Sans'; font-size: 16px;">The Renaissance: 1515-1643</h3>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">With Francis I, the Renaissance arrived in Paris with a bang. Renaissance ideas insisted on a sense of human proportion in all the arts, including architecture. </p>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">His successor, Henri IV completed the Pont Neuf, extended the Louvre and reorganized the entranceways of the city. His most beautiful public legacy is the Place Royale. Le Barbier, a French real estate developer established elegant neighborhoods in the Latin Quarter, the Faubourg Saint-Germain, and the Quartier du Palais-Royalby.</p>
+<h3 style="font-family: 'Work Sans'; font-size: 16px;">French Baroque and Classicism: 17th Century</h3> 
+<h3 style="font-family: 'Work Sans'; font-size: 16px;">Rococo: 1715-1774</h3>
+<h3 style="font-family: 'Work Sans'; font-size: 16px;">Neo-Classicism: late 18th- early 19th-century</h3>
+</div>
+<div class='info' id="1801-1850-info" style="display:none">
+<h3 style="font-family: 'Work Sans'; font-size: 16px;">Consulate, Empire, and Restoration</h3>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">The Revolution devastated Paris and the city’s architecture suffered alongside its people. The Napoleonic style is a mishmash of Neo-classic impulses. Classical references pleased Napoleon, since they suited his ambitions for an expanding Empire. He wisely set up massive building projects to keep Parisians employed, and his largest urban projects shaped today’s city. He started construction on Père Lachaise cemetery, had parts of the Tuileries and the Louvre rebuilt, began the Madeleine, and ordered the Ourq Canal dug. He also ordained that streets should be numbered odd on one side, even on the other, a remarkably practical concept that hadn’t occurred to anyone before.</p>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">But Napoleon’s Empire turned out to be brief. His most important architectural contribution wasn’t stylistic but practical: under his reign, 21,000 new Parisian apartment buildings were constructed. His death  in 1824 unleashed a period of great unrest. People who remembered the Revolution wondered if it was all going to happen again. But the Industrial Revolution was gradually changing the economic structure of Paris, and in 1830, Louis-Philippe, the sucessor, attempted to establish an Orleans style in architecture, but his reign was too short to have a major impact. He is responsible for finishing the Madeleine Church, along with the grandiose Galerie des Batailles in Versailles.</p>
+</div>
+<div class='info' id="1851-1914-info" style="display:none">
+<h3 style="font-family: 'Work Sans'; font-size: 16px;">The Haussmann renovations under the Second Empire & the early Third Republic</h3>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">In 1848, French politics were once again in disarray, Paris was in revolt, and Louis Napoleon seized his chance. In 1851, he seized power in a coup d’etat and a year later became Emperor Napoleon III. His dream had become reality. But his capital city was a wreck; by 1853, the city’s population had skyrocketed to over 1 million. Only one house in five had any running water; of these, most only had plumbing on the ground floor.</p>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">By sheer luck, Napoleon found the perfect man for the job in Baron Georges Eugène Haussmann. Haussmann understood the desperate need to reorganize the city and succeeded in turning Paris into a functioning Imperial city despite an incredibly short period of control. The Hôtel de Ville, symbol of Haussmann’s power, was set on fire by an enraged mob. Yet, Haussmann is the most enduring and successful city planner Paris has ever known. His apartment buildings remain the Parisian standard, his sewage system still works, and his reorganization of city boulevards has allowed Paris traffic to creep into the 21st century. The city’s beauty, with its splendid London-inspired Bois de Boulogne and Vincennes, remains the sole truly great accomplishment of Napoleon III.</p>
+</div>
+<div class='info' id="1915-1939-info" style="display:none">
+<h3 style="font-family: 'Work Sans'; font-size: 16px;">Art Deco and the Modern Movement</h3>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">At the end of World War I, a new aesthetic began to bubble up in Paris. Art Deco first appeared in Paris and reached its greatest heights in New York during the 20s and 30s. World War II put an end to Art Deco’s optimism; the less-flamboyant lines of pure Modernism took over. But at the beginning, in the 1920s in Paris, the two styles overlapped, particularly in private houses designed in newly-developing residential areas of Paris such as Boulogne and Montsouris.</p>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">There was a housing boom all over the city, especially at its edges. The city wall of Adolphe Thiers, built in 1851 and made obsolete soon afterwards when the city limits were changed by Haussmann, was finally completely demolished after World War I. The new empty space was quickly filled with housing projects, many of them government-sponsored and built of brick. The new housing was influenced by the sharp angles and setbacks of Art Deco, with decorative brickwork and intelligent layouts. These brick buildings became known as “the red belt,” because they were brick-colored and inhabited by socialist workers, in a belt at the edge of the city.</p>
+</div>
+<div class='info' id="1940-1967-info" style="display:none">
+1940-1967
+</div>
+<div class='info' id="1968-1975-info" style="display:none">
+<h3 style="font-family: 'Work Sans'; font-size: 16px;">Post War through the Seventies</h3>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">These years are often seen as a disaster for French architecture, in particular the destruction of Les Halles in central Paris. But even after ripping out the guts of the city, one phoenix rose from the ruins. Renzo Piano and Richard Rogers created the superb Centre Georges Pompidou on the square that had once been Les Halles’ parking lot. The brightly-hued building changed the course of European architecture which its concept pushes all the utilities and services to the outside of the building in order to free up enormous exhibition spaces within. It has a delightful feeling of fun, its purpose-coded colors sparkling again after its 2000 renovation. </p>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">Although the Pompidou stands out radically from its neighbours because of its style, its height isn’t much taller than others as Paris remains largely 8-stories high. To keep taller buildings from ruining the skyline, a sort of architectural apartheid was introduced. While low-rise Paris remained pristine, skyscrapers were sent to La Defense, a futuristic suburb just beyond the Arc de Triomphe. The first 1964 plan was criticised for being dull; the second plan with much higher and more dramatic buildings was approved in 1968. This business-oriented suburb covers about 1,000 hectares; today, some of the towers are beautiful, some ugly, and construction continues, always carefully planned.</p>
+</div>
+<div class='info' id="1976-1981-info" style="display:none">
+1976-1981
+</div>
+<div class='info' id="1982-1989-info" style="display:none">
+<h3 style="font-family: 'Work Sans'; font-size: 16px;">Contemporary, 1980 to Present</h3>
+<p style="font-family: 'Work Sans';font-size: 14px; text-align: justify">In the 1980s, President Mitterrand unveiled a new architectural concept to move Paris into the next millennium. His “grands travaux” brought both praise and horror as they evolved, but no one can deny that the final result is a renewed and thrillingly diverse city. Mitterrand is responsible for commissioning the Grand Louvre’s new glass pyramid entrance (created by I.M. Pei), the move of the Ministry of Finance into a new building (designed by Paul Chemetov), the Grande Arche de la Defense (by Von Spreckelsen), the Cité de la Musique (by Pritzer-prize winner Christian de Portzamparc), the Institut du Monde Arabe (by Jean Nouvel), the Opera Bastille (by the less-accomplished Carlos Ott), and the new library (by Dominique Perrault), now named after the grand master puppeteer himself as the Bibliotèque François-Mitterrand. Not all of these buildings were successful (the Opera Bastille stands out as a particular blot on the landscape), but overall, Mitterrand’s desire to make Paris a contemporary architectural star turned out to be a resounding success. </p>
+</div>
+<div class='info' id="1990-1999-info" style="display:none">
+1990-1999
+</div>
+<div class='info' id="2000-2007-info" style="display:none">
+2000-2007
+</div>
+<div class='info' id="After 2008-info" style="display:none">
+</div>
+        </div>
+    </aside>
+	
+    <div id="loader" style="opacity: 0;">
+        <div class="CDB-LoaderIcon CDB-LoaderIcon--big">
+            <svg class="CDB-LoaderIcon-spinner" viewBox="0 0 50 50">
+                <circle class="CDB-LoaderIcon-path" cx="25" cy="25" r="20" fill="none"></circle>
+            </svg>
+        </div>
+    </div>
+	
+    <script>
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: carto.basemaps.darkmatter,
+            center: [2.346844, 48.859008],
+            zoom: 11.5,
+            scrollZoom: false
+        });
+        
+        
+        
+        const nav = new mapboxgl.NavigationControl();
+        map.addControl(nav, 'top-left');
+
+        carto.setDefaultAuth({
+            username: 'wongcyu',
+            apiKey: '35945733535a87142523d4040b265ea2641cc987'
+        });
+        
+        
+        const arr_source = new carto.source.Dataset('arrondissements');
+        const arr_viz = new carto.Viz(`
+            color: rgba(255,255,255,0)
+            strokeColor: rgba(255,255,255,0.1)
+            strokeWidth: 1.5
+            @currentFeatures: viewportFeatures()
+            @arr: $l_ar
+			@name: $l_aroff
+            @num: $objectid
+			@info: $info
+            
+        `);
+        const arr_layer = new carto.Layer('arr_layer', arr_source, arr_viz);
+        
+        arr_layer.addTo(map);
+        
+        const source = new carto.source.Dataset('ParisBuildingsbyAge');
+
+
+        // Define animation viz with variables
+        const viz = new carto.Viz(`
+            @duration: 30
+            @animation: animation($period, @duration, fade(1, hold))
+            filter: @animation
+            color: ramp(buckets($c_perconst, ["Avant 1800", "1801 - 1850","1851 - 1914","1915 - 1939","1940 - 1967","1968 - 1975","1976 - 1981","1982 - 1989","1990 - 1999","2000 - 2007","2008 et plus"]),[#FFF0F5,#DC143C,#6495ED,#ff8050,#ff9631,#ffa900,#ffbb00,#ffcd00,#ffde00,#20b2aa,#90ee90])
+            strokeWidth: 0
+        `);
+
+        const layer = new carto.Layer('layer', source, viz);
+        console.log(layer);
+
+        layer.addTo(map);
+
+        // Get HTML elements
+        const $playbutton = document.getElementById('js-play-button');
+        const $pausebutton = document.getElementById('js-pause-button');
+        const $durationRange = document.getElementById('js-duration-range');
+        const $timeRange = document.getElementById('js-time-range');
+        const $spanDuration = document.getElementById('js-duration-span');
+        const $currentTime = document.getElementById('js-current-time');
+
+        // Save initial time range value
+        let last = $timeRange.value;
+
+        // Listen to interaction events
+        $durationRange.addEventListener('change', () => {
+            const duration = parseInt($durationRange.value, 10);
+            // Update animation duration
+            viz.variables.duration = $spanDuration.innerHTML = duration;
+        });
+
+        $playbutton.addEventListener('click', () => {
+            // Play the animation
+            viz.variables.animation.play()
+        });
+
+        $pausebutton.addEventListener('click', () => {
+            // Pause the animation
+            viz.variables.animation.pause();
+        });
+
+        $timeRange.addEventListener('change', () => {
+            // Update animation progress
+            viz.variables.animation.setProgressPct($timeRange.value);
+            last = $timeRange.value;
+        });
+
+        // Listen to layer events
+        layer.on('updated', () => {
+            if ($timeRange.value == last) {
+                $timeRange.value = viz.variables.animation.getProgressPct();
+                last = $timeRange.value;
+            }
+            $currentTime.innerText = viz.variables.animation.getProgressValue().toISOString();
+        });
+
+        layer.on('loaded', hideLoader);
+
+        function hideLoader() {
+            document.getElementById('loader').style.opacity = '0';
+        }
+        
+        
+        
+        const displayCenter = () => {
+            const center = map.getCenter();
+            const longitude = center.lng.toFixed(6);
+            const latitude = center.lat.toFixed(6);
+            const bearing = map.getBearing().toFixed(0);
+            const zoom = map.getZoom().toFixed(2);
+            console.log(`Center: [${longitude}, ${latitude}] - Zoom: ${zoom} - Bearing: ${bearing}º`);
+        };
+        map.on('move', displayCenter);
+        
+        const interactivity = new carto.Interactivity(arr_layer);
+        
+        interactivity.on('featureClick', featureEvent => {
+            featureEvent.features.forEach((feature) => {
+                console.log(feature);
+                const name = feature.variables.name.value;
+                
+                console.log(`You have clicked on ${name}`);
+            });
+
+            // Get the first feature
+            const feature = featureEvent.features[0];
+            if (!feature) {
+                return;
+            }
+            
+            // Add pop-up using mapboxgl
+            const coords = featureEvent.coordinates;
+            const html = `
+                <h2> ${feature.variables.arr.value}: ${feature.variables.name.value}</h2> 
+				<p style="width: 500px;">${feature.variables.info.value}</p>
+            `;
+            
+            new mapboxgl.Popup()
+                .setLngLat([2.1210, 48.78])
+                .setHTML(html + `<iframe src="` +`SecondViz_Charts/Radal` +`${feature.variables.num.value}.html" width="450px" height="450px" frameBorder="0" scrolling="no" ></iframe>` )
+                .addTo(map);
+        });
+
+        // Disable previous listener on layer:updated just for clarity
+        
+
+        // Change style on 'featureEnter'
+        interactivity.on('featureEnter', featureEvent => {
+            featureEvent.features.forEach((feature) => {
+                feature.color.blendTo('rgba(255, 255, 255, 0.3)', 100);
+                feature.width.blendTo(20, 100);
+            });
+        });
+
+        // Reset to previous style on 'featureLeave'
+        interactivity.on('featureLeave', featureEvent => {
+            featureEvent.features.forEach((feature) => {
+                feature.color.reset();
+                feature.width.reset();
+            });
+        });
+      
+    </script>
+	<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoic2djd2FuMTYiLCJhIjoiY2oxeXIxc2ZwMDAwdTMzcnZvNzQ2NHJodyJ9.WTKK8mArsncLhB20v3wzxA';
+	map.on('load', function () {
+			map.addLayer({
+					id:'Before 1800',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.65zb890l'
+					},
+					'source-layer': 'Before1800-8fz6mi',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						
+						"fill-color": "#FFF0F5",
+						"fill-opacity": 1
+					},
+				});
+			map.addLayer({
+					id:'1801-1850',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.4ram7fpp'
+					},
+					'source-layer': '1801-1850-3ey3lj',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						
+						"fill-color": "#DC143C",
+						"fill-opacity": 1
+					},
+				});
+			map.addLayer({
+					id:'1851-1914',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.7b6qhy3t'
+					},
+					'source-layer': '1851-reduced01-2zhrjj',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						"fill-color": "#6495ED",
+						"fill-opacity": 1
+					},
+				});
+			map.addLayer({
+					id:'1915-1939',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.cisytj50'
+					},
+					'source-layer': '1915-1939-6118v9',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						
+						"fill-color": "#ff8050",
+						"fill-opacity": 1
+					},
+				});
+			map.addLayer({
+					id:'1940-1967',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.08b8a6t0'
+					},
+					'source-layer': '1940-1967-6mcne0',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						
+						"fill-color": "#ff9631",
+						"fill-opacity": 1
+					},
+				});
+			map.addLayer({
+					id:'1968-1975',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.8klh1mda'
+					},
+					'source-layer': '1968-1975-80vrc2',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						
+						"fill-color": "#ffa900",
+						"fill-opacity": 1
+					},
+				});
+			map.addLayer({
+					id:'1976-1981',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.aofzpioq'
+					},
+					'source-layer': '1976-1981-55wo1j',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						
+						"fill-color": "#ffbb00",
+						"fill-opacity": 1
+					},
+				});
+			map.addLayer({
+					id:'1982-1989',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.4ura3lew'
+					},
+					'source-layer': '1982-1989-5bheaz',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						
+						"fill-color": "#ffcd00",
+						"fill-opacity": 1
+					},
+				});
+			map.addLayer({
+					id:'1990-1999',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.65awbwpj'
+					},
+					'source-layer': '1990-1999-5noopw',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						
+						"fill-color": "#ffde00",
+						"fill-opacity": 1
+					},
+				});
+			map.addLayer({
+					id:'2000-2007',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.046pp2so'
+					},
+					'source-layer': '2000-2007-26mw4i',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						
+						"fill-color": "#20b2aa",
+						"fill-opacity": 1
+					},
+				});
+			map.addLayer({
+					id:'After 2008',
+					type:'fill',
+					source: {
+						type: 'vector',
+						url: 'mapbox://sgcwan16.blfkfnf0'
+					},
+					'source-layer': 'After2008-5sjq0w',
+					'layout': {
+						'visibility': 'none'
+					},
+					paint:{
+						
+						"fill-color": "#90ee90",
+						"fill-opacity": 1
+					},
+				});
+
+
+		});
+	
+	
+	function myFunction() {
+		
+	};
+	
+	var list = document.querySelectorAll('li');
+	Array.prototype.slice.call(list).forEach(function(listItem){
+		listItem.addEventListener('click', function(e){
+		if (layer.visible === true){
+            console.log('Do somthing')
+			layer.hide();
+        }
+		console.log(this.id);
+		e.preventDefault();
+        e.stopPropagation();
+		
+		var clickedLayer = this.id;
+		var x = document.getElementById(clickedLayer + '-info');
+		var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+		 if (visibility === 'none') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            this.className = '';
+            x.style.display = 'block';
+        } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+			x.style.display = 'none';
+            
+        }
+		});
+		});
+		
+		
+	</script>
+	
+	
+
+
+      </body></html>
