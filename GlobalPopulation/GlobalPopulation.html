@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>Annual average daily flow (AADF) in London</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js'></script>
+  <link href= 'https://fonts.googleapis.com/css?family=Work Sans|Droid+Serif:bold' rel='stylesheet';>
+</head>
+<body>
+    
+    
+    
+<link href='GlobalMap.css' rel='stylesheet' />    
+<link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>    
+<div id='map'></div>     
+<div class='map-overlay top'>  
+    <div class='map-overlay-inner'>
+        <h1> Global Population 1200 - 2015 </h1>
+        <p class='credit'> This visualisation displays ...</p>
+        <div class='session' id='sliderbar'>
+            <label><h2>Year: <span id='slider-value'>1800</span></h2></label>
+            <table><tr><td>
+                <input id='slider' type='range' min='1200' max='2015' step='5' value='1875' list='tickmarks'/>
+                <datalist id='tickmarks'>
+            <option value='1200' label="1200"><option value="1400">
+            <option value="1450"><option value="1700"><option value="1800"><option value="1875"><option value="1950"><option value="1980"><option value="2015" label="2015">
+            </datalist>
+            </td>
+                
+            </tr></table>
+            
+        <div class='session'>
+            <h2>Population</h2>
+            <div class='row colors'></div>
+            <div class='row labels'>
+                <div class='label'>0</div>
+                <div class='label'>717</div>
+                <div class='label'>38001(k)</div>
+            </div>
+            
+        <div class='session'>
+            <div class='row' id='filters'>
+                <fieldset>
+                <label><h2>Display Cities</h2></label>
+                <select id='layer' name='layer'>
+                    <option value='all'>All Cities</option>
+                    <option value='major'>Largest Cities</option>
+                </select>
+                </fieldset>
+            </div>
+        </div>
+        <p class='credit'> Historical Urban Population Growth Data, <a href='https://www.dft.gov.uk/traffic-counts/'>Seto Lab</a>, 1200 - 1950</p>
+        <p class='credit'> Population in largest city, <a href='https://data.worldbank.org/indicator/EN.URB.LCTY?end=2017&start=1960'>The World Bank</a>, 1980 - 2015 </p>		
+        <button class="button"  onclick="myFunction()">1200</button>
+        <button class="button"  onclick="myFunction1()">1400</button> 
+        <button class="button"  onclick="myFunction2()">1450</button> 
+        <button class="button"  onclick="myFunction3()">1700</button>
+        <button class="button"  onclick="myFunction4()">1800</button> 
+        <button class="button"  onclick="myFunction5()">1875</button>
+        <button class="button"  onclick="myFunction6()">1950</button>
+        <button class="button"  onclick="myFunction7()">1980</button> 
+        <button class="button"  onclick="myFunction8()">2015</button>     
+		<iframe src="FirstViz_Charts/ParisPop_linechart.html" width="100%"  frameBorder="0" scrolling="no" height="500px"></iframe>
+        </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+    </div>
+           
+</div>
+<div class='map-overlay top' id="Y1200-1400" style="display:none">
+    <div id="Y1200-1400-1">
+    <h2>World in 1200</h2>  
+    <p>
+        This period is filled with aggression and expansion. In the history of European culture, is belonged to the Middle Ages, and after its conquests in Asia the Mongol Empire stretched from Eastern Asia to Eastern Europe.
+        </p> 
+    <h2>Paris in 1200</h2>
+    <p>In the thirteenth century, the population of Paris reached 70,000. King Philip Auguste ordered the construction of the city walls and fortifications, and the population continued to increase, becoming the power center of the kingdom. The city’s trade and handicraft workshops were gradually concentrated on the right bank of the Seine and the market began to form. Most of the educational, academic and religious circles live on the left bank of the Seine. Paris became a center for the creation of illuminated manuscripts and the birthplace of Gothic architecture. Despite civil wars, the plague, and foreign occupation, Paris became the most populous city in the Western world during the Middle Ages. 
+    </p>    
+    </div>
+    <div id="Y1200-1400-2">
+    <iframe src="FirstViz_Charts/R_1200.html" width="100%" frameBorder="0" scrolling="no" height="950px"></iframe>    
+    </div>
+</div>   
+<div class='map-overlay top' id="Y1400-1450" style="display:none">
+    <div id="Y1400-1450-1">
+    <h2>World in 1400</h2>
+    <p>The second plague pandemic started with the Black Death, which reached mainland Europe in 1348 and killed up to a half of the population of Eurasia in the next four years.</p> 
+    <h2>Paris in 1400</h2>    
+    <p>It is a Turbulent era, which made people suffered by the epidemics and civil war. The population has declined dramatically during this periods. Epidemics of bubonic plague and smallpox strike the city.</p>    
+    </div>
+    <div id="Y1400-1450-2">
+    <iframe src="FirstViz_Charts/R_1400.html" width="100%" frameBorder="0" scrolling="no" height="950px"></iframe> 
+    </div>
+</div>
+<div class='map-overlay top' id="Y1450-1700" style="display:none">
+    <div id="Y1450-1700-1">
+    <h2>World in 1450</h2>
+    <p></p>
+    <h2>Paris in 1450</h2> 
+    <p>At the beginning of the 17th century, King Henry IV of the time greatly expanded Paris. After that, under the reign of Louis XIV, France has become the most powerful country in the world, and Paris in the 18th century was the second-largest city in Europe, after London, with a population of about 600,000 people. 
+    In the 18th and 19th centuries, Paris was still expanding gradually, and a large amount of arable land was occupied by the city.
+    </p>    
+    </div>
+    <div id="Y1450-1700-2">
+    <iframe src="FirstViz_Charts/R_1450.html" width="100%" frameBorder="0" scrolling="no" height="950px"></iframe> 
+    </div>
+</div>
+<div class='map-overlay top' id="Y1700-1800" style="display:none">
+    <div id="Y1700-1800-1">
+    <h2>World in 1700</h2>
+    <h2>Paris in 1700</h2>
+    <p>At the beginning of the 17th century, King Henry IV of the time greatly expanded Paris. After that, under the reign of Louis XIV, France has become the most powerful country in the world, and Paris in the 18th century was the second-largest city in Europe, after London, with a population of about 600,000 people.   
+    In the 18th and 19th centuries, Paris was still expanding gradually, and a large amount of arable land was occupied by the city.
+    </p>    
+    </div>
+    <div id="Y1700-1800-2">
+    <iframe src="FirstViz_Charts/R_1700.html" width="100%" frameBorder="0" scrolling="no" height="950px"></iframe>
+    </div>
+</div> 
+<div class='map-overlay top' id="Y1800-1875" style="display:none">
+    <div id="Y1800-1875-1">
+    <h2>World in 1800</h2>
+    <p>In 1800, the European order dominated the world map with its rival. In 1800, the United States claimed its independence.  Europeans began to colonize Africa further. the British (1795–1802), had long been established as a way station for ships, trading in Asia. Britain had recently claimed Australia and the Chinese Qing dynasty, while still at its apogee, was uneasy about European possessions encroaching on its borders. China provided Europe with silk, tea and ceramics and was paid in silver and opium, eventually leading to the Opium Wars and partial colonization by the British and Portuguese.
+    </p>
+    <h2>Paris in 1800</h2>
+    <p>The French revolution began in 1789, which caused long periods of turmoil and turnover in the French regime, and the war made the population reduced in this time. 
+    </p>    
+    </div>
+    <div id="Y1800-1875-2">
+    <iframe src="FirstViz_Charts/R_1800.html" width="100%" frameBorder="0" scrolling="no" height="950px"></iframe>
+    </div>
+</div> 
+<div class='map-overlay top' id="Y1875-1950" style="display:none">
+    <div id="Y1875-1950-1">
+    <h2>World in 1875</h2>
+    <p>During the agricultural and industrial revolutions in Europe, child life expectancy improved dramatically. The percentage of children born in London who died before the age of five decreased from 74.5 per cent in 1730-49 to 31.8 per cent in 1810-29. Europe’s population doubled to almost 200 million during the 18th century, and doubled again during the 19th century, thanks to improved living conditions and healthcare. </p>    
+    <h2>Paris in 1875</h2>
+    <p>The first Industrial Revolution lead to a large number of labours gathering in Paris.
+    Osman launched a large-scale planning of the city of Paris with a group of architects, planning experts and water experts. The core of the Paris transformation plan developed by Osman is the planning and construction of the trunk road network. The large number of old buildings are demolished, and a spacious avenue is opened by cutting the cake. The tall trees are planted on both sides to become the boulevard. Osman strictly regulates the height and form of buildings on both sides of the road, emphasizes the continuity of the horizontal line of streetscapes, and consciously creates urban landscapes. After the renovation, Paris formed a single-center, radial traffic network, with the main axis parallel to the Seine.
+    </p>    
+    </div>
+    <div id="Y1875-1950-2">
+    <iframe src="FirstViz_Charts/R_1875.html" width="100%" frameBorder="0" scrolling="no" height="950px"></iframe>
+    </div>
+</div> 
+<div class='map-overlay top' id="Y1950-1980" style="display:none">
+    <div id="Y1950-1980-1">
+    <h2>World in 1950</h2>
+    <p>The second world war has caused huge damage all over the world. Lots of countries independent.The whole world are focused on the economic development which create the post-war booming phenomena.</p>
+    <h2>Paris in 1950</h2>
+    <p>The Second World War caused severe damage to Paris, and many citizens even lost their homes. To provide shelter for people, in just ten years, Paris has built a 10,000-hectare residential area in the suburbs, almost equal to the urban area. Because of the rush of construction, the equipment is poor and the living conditions are poor. It was under this circumstance that the French government made up its mind to start two large-scale planning and renovations for the Greater Paris area in 1961 and 1968 respectively. However, since 1970, the political and economic institutions of France, which had been excessively concentrated in the capital, were suspended, the development of Paris was suspended.</p>    
+    </div>
+    <div id="Y1950-1980-2">
+    <iframe src="FirstViz_Charts/R_1950.html" width="100%" frameBorder="0" scrolling="no" height="950px"></iframe>
+    </div>
+</div> 
+<div class='map-overlay top' id="Y1980-2015" style="display:none">
+    <div id="Y1980-2015-1">
+    <h2>World in 1980</h2>
+    <p>The oil crisis in 1970s has shortly slow down the development speed of most countries. The cold war between Russia Federation and USA has last 30 years.</p> 
+    <h2>Paris in 1980</h2> 
+    <p>After the establishment of the Centre Pompidou in 1977 and the new shopping underground street, the construction of Paris has been new direction. In order to make the development of the eastern and western parts of Paris more balanced, in 1981, the top ten projects including the Bastille Opera House and the National Library, which began with the French government of Mitterrand, were completed at the end of 1996.</p>
+    </div>
+    <div id="Y1980-2015-2">
+    <iframe src="FirstViz_Charts/R_1980.html" width="100%" frameBorder="0" scrolling="no" height="950px"></iframe>
+    </div>
+</div> 
+<div class='map-overlay top' id="Y2015" style="display:none">
+    <div id="Y2015-1">
+    <h2>World in 2015</h2>
+    <p>In the new century, internet and technology development has changed people’s life.The connection between countries gets more close. Terrorism has become new challenge for the whole world. 
+    </p>
+    <h2>Paris in 2015</h2>
+    <p>In the early 21st century, the population of Paris began to increase slowly again, as more young people moved into the city. It reached 2.25 million in 2011. In 2007, President Nicolas Sarkozy launched the Grand Paris project, to integrate Paris more closely with the towns in the region around it. After many modifications, the new area, named the Metropolis of Grand Paris, with a population of 6.7 million. November 2015, Paris was experienced a series of co-ordinated terrorist attacks that took place on 13 November 2015. More than 500 victims were involved into this attack, which cause huge shock in the world-wide.</p>    
+    </div>
+    <div id="Y2015-2">
+    <iframe src="FirstViz_Charts/R_2015.html" width="100%" frameBorder="0" scrolling="no" height="950px"></iframe>
+    </div>
+</div>     
+<script>
+   
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2djd2FuMTYiLCJhIjoiY2oxeXIxc2ZwMDAwdTMzcnZvNzQ2NHJodyJ9.WTKK8mArsncLhB20v3wzxA';
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/sgcwan16/cjt1clhzo0pjj1fp1bh0yqp36',
+  center: [25.176495, 45.874835],
+  zoom: 2.8
+});
+    
+    
+ var years = [1200, 1450, 1700, 1800, 1875, 1950, 1980, 2015];
+    
+  
+    var overlay = document.getElementById('map-overlay');
+    
+    map.on('load', function(){
+        
+        var filterYear = ['==',['number',['get','year']],1200];
+        
+        var filterFlow = ['>',['number',['get', 'Value']],0];
+        
+        
+        map.addLayer({
+            id: 'Population',
+            type:'circle',
+            source: {
+                type: 'vector',
+                url: 'mapbox://sgcwan16.4egau77a'
+            },
+            'source-layer': 'Population1200-2015NORMAL-8aabcx',
+            'layout': {
+                'visibility': 'visible'
+            },
+            paint: {
+                'circle-radius': {
+                    property: 'VAL',
+                    type: 'exponential',
+                    stops: [
+                        [{zoom: 2, value: 0}, 2],
+                        [{zoom: 2, value: 1}, 10],
+                        [{zoom: 9.3, value: 100}, 7.5],
+                        [{zoom: 9.3, value: 180}, 15],
+                        [{zoom: 12, value: 0}, 5],
+                        [{zoom: 12, value: 100}, 15],
+                        [{zoom: 12, value: 180}, 30],
+                      
+                                ]
+                },
+                'circle-opacity': 0.9,
+                'circle-color': {
+                    property: 'VAL',
+                    stops: [
+                        
+                        [0, '#FFFF00'],
+                        [0.002158, '#ffb64d'],
+                        [0.08579, '#dc4f41'],
+                        [1, '#800000']
+                    ]
+                }
+            },
+            'filter': ['all', filterYear, filterFlow]
+            
+        });
+        
+       
+        
+        var sliderValue = document.getElementById('slider-value');
+         document.getElementById('slider').addEventListener('input', function(e) {
+                var year = parseInt(e.target.value, 10);
+                //filterBy(year);
+                filterYear = ['==',['number',['get','year']],year];
+                map.setFilter('Population', ['all', filterYear, filterFlow]);
+                document.getElementById('slider-value').innerText = year;
+                });
+      
+       /*slider.addEventListener('input', function(e){
+           sliderValue.textContent = e.target.value;
+       }); */
+        
+        //POPUP
+        
+        
+        
+        map.addControl(new mapboxgl.NavigationControl({ position: 'top-left' })); 
+        
+        
+        document.getElementById('layer').addEventListener('change', function(e){
+        var AADF = e.target.value;
+        if (AADF === 'all') {
+            filterFlow = ['>',['number',['get', 'Value']],0];
+        } else if (AADF === 'major') {
+            filterFlow = ['>',['number',['get', 'Value']],500];
+        } 
+        
+        map.setFilter('Population',['all', filterYear, filterFlow]);
+    });
+    });
+    
+
+</script>
+<script>
+var periods = ['Y1200-1400','Y1400-1450', 'Y1450-1700', 'Y1700-1800', 'Y1800-1875', 'Y1875-1950','Y1950-1980', 'Y1980-2015']; 
+
+function myFunction() {
+  var x = document.getElementById("Y1200-1400");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function myFunction1() {
+  var x = document.getElementById("Y1400-1450");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function myFunction2() {
+  var x = document.getElementById("Y1450-1700");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function myFunction3() {
+  var x = document.getElementById("Y1700-1800");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function myFunction4() {
+  var x = document.getElementById("Y1800-1875");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function myFunction5() {
+  var x = document.getElementById("Y1875-1950");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function myFunction6() {
+  var x = document.getElementById("Y1950-1980");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function myFunction7() {
+  var x = document.getElementById("Y1980-2015");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function myFunction8() {
+  var x = document.getElementById("Y2015");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}    
+    
+
+
+
+    
+</script>    
+
+</body>
+</html>
