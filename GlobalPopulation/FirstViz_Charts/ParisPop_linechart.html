@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chart using XML Data</title>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<link href= 'https://fonts.googleapis.com/css?family=Work Sans|Droid+Serif:bold' rel='stylesheet';>
+<script type="text/javascript">
+    window.onload = function() {
+        var dataPoints = [];
+	 
+        function getDataPointsFromCSV(csv) {
+            var dataPoints = csvLines = points = [];
+            csvLines = csv.split(/[\r?\n|\r|\n]+/);         
+		        
+            for (var i = 0; i < csvLines.length; i++)
+                if (csvLines[i].length > 0) {
+                    points = csvLines[i].split(",");
+                    dataPoints.push({ 
+                        x: parseInt(points[0]),
+                        y: parseInt(points[1]),
+                    });
+                    
+                }
+            return dataPoints;
+        }
+	
+	$.get("https://raw.githubusercontent.com/InvisibleCities-Group4/Group-project/master/ranked_Paris.csv", function(data) {
+	    var chart = new CanvasJS.Chart("chartContainer", {
+		    animationEnabled: true,
+	        backgroundColor: "transparent",
+			height: 260,       
+			title:{
+				fontFamily: "tahoma",
+				text:"Paris Population Change"
+			},
+			axisX:{
+				title: "Year"
+			},
+			axisY2:{
+				title: "Population",
+				interlacedColor: "rgba(1,77,101,.2)",
+				gridColor: "rgba(1,77,101,.1)"
+			},
+		    data: [{
+		         type: "line",
+		         name: "companies",
+		         axisYType: "primary",
+		         color: "#014D65",
+                 toolTipContent: "{y} population",
+		         dataPoints: getDataPointsFromCSV(data)
+		      }]
+	     });
+		
+	      chart.render();
+
+	});
+  }
+</script>
+</head>
+<body>
+	<div id="chartContainer" style="width:100%; height:100%;"></div>
+</body>
+</html>
