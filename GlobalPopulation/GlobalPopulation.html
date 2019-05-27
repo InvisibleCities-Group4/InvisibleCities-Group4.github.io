@@ -278,7 +278,7 @@ const map = new mapboxgl.Map({
         if (Cities === 'all') {
             filterFlow = ['>',['number',['get', 'Value']],0];
         } else if (Cities === 'major') {
-            filterFlow = ['>',['number',['get', 'Value']],300];
+            filterFlow = ['>',['number',['get', 'Value']],200];
         } 
         
         map.setFilter('Population',['all', filterYear, filterFlow]);
