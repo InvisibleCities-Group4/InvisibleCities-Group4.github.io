@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset='utf-8' />
-  <title>Display a map</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
-  <link href= 'https://fonts.googleapis.com/css?family=Work Sans|Droid+Serif:bold' rel='stylesheet';>    
-  <style>
-    body { margin:0; padding:0; }
-    #map { position:absolute; top:0; bottom:0; width:100%; }
-  </style>
+ <meta charset='utf-8' />
+ <title>Display a map</title>
+ <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+ <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+ <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+ <link href= 'https://fonts.googleapis.com/css?family=Work Sans|Droid+Serif:bold' rel='stylesheet';>
+ 
+ <style>
+   body { margin:0; padding:0; }
+   #map { position:absolute; top:0; bottom:0; width:100%; }
+ </style>
 </head>
 <body>
 <style>
 #map {
 position: fixed;
-width:50%;
+width:75%;
 }
 #features {
-width: 50%;
-margin-left: 50%;
+width: 25%;
+margin-left: 75%;
 font-family: 'Work Sans';	
 overflow-y: scroll;
 background-color: #fafafa;
 }
 section {
-padding:  25px 50px;
+padding:  10px 10px; 
 line-height: 25px;
 border-bottom: 1px solid #ddd;
 opacity: 0.25;
-font-size: 13px;
+font-size: 12px;
 }
 section.active {
 opacity: 1;
@@ -39,88 +40,102 @@ section:last-child {
 border-bottom: none;
 margin-bottom: 200px;
 }
+    
+.mapboxgl-popup {
+    max-width: 400px;
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.marker {
+  background-image: url('marker.png');
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}    
 </style>
 <div id='map'></div>
 <div id='features'>
      <section id='STARS' class='active'>
          <h2>HISTORY OF PARIS</h2>
-         <p></p>
+         <p>Scroll down to read more. Hover over the markers to see the locations in reality.</p>
      </section>
      <section id='Parisii' class='active'>
-         <h3>Parisii.</h3>
-         <p>Ile de la Cite. Between 250 and 225 BC, during the Iron Age, the Parisii, a sub-tribe of the Celtic Senones, settled on the banks of the Seine. At the beginning of the 2nd century BC, they built an oppidum, a walled fort in Nanterre and bridges over the Seine. The settlement was called "Lucotocia" at this time. In 52 BC at the Battle of Lutetia, the Parisii and Romans battled, the Parisii were defeated and the Romans took control. The Romans built an entirely new city as a base for their soldiers and the Gallic auxiliaries with the intention of keeping an eye on Gaul.</p>
+         <h3>Settlement of Paris (250-225 BC) </h3>
+         <p>Île de la Cité. Between 250 and 225 BC, during the Iron Age, the Parisii, a sub-tribe of the Celtic Senones, settled on the banks of the Seine. At the beginning of the 2nd century BC, they built an oppidum, a walled fort in Nanterre and bridges over the Seine. The settlement was called "Lucotocia" at this time. In 52 BC at the Battle of Lutetia, the Parisii and Romans battled, the Parisii were defeated and the Romans took control. The Romans built an entirely new city as a base for their soldiers and the Gallic auxiliaries with the intention of keeping an eye on Gaul.</p>
      </section>
      <section id='Romans'>
-	     <h3>Romans</h3>
-         <p>Roman Lutetia (52 BC-486 AD). The Arenes de Lutece is one of the oldest monuments in Paris; it was build during the 1st century. This old amphitheater in the Latin Quarter could host up to 15000 spectators. This is, with the Thermes de Cluny (Roman baths), the only remnant of the Gallo-roman era in Paris. When Lutèce was sacked during the barbarian raids of 275 AD, some of the structure's stone work was used to reinforce the city's defences around the Île de la Cité.</p>
+	     <h3>Romans (52 BC-486 AD)</h3>
+         <p>The Arenes de Lutece is one of the oldest monuments in Paris; built during the 1st century. This old amphitheater in the Latin Quarter could host up to 15000 spectators. This is, with the Thermes de Cluny (Roman baths), the only remnant of the Gallo-roman era in Paris. When Lutèce was sacked during the barbarian raids of 275 AD, some of the structure's stone work was used to reinforce the city's defences around the Île de la Cité.</p>
      </section>
 
      <section id='Franks'>
-         <h3>Franks</h3>
+         <h3>The Franks (6th-11th centuries)</h3>
          <p>Abbey of Saint Germain des Pres. In 508 the first king of the Franks, Clovis I, made Paris the capital of his empire. In 987, the Capetian dynasty came to power until 1328. Saint Germain des Pres Church is one of the oldest Romanesque churches in France. King Childebert I founded the abbey in 558AD. He built Saint-Vincent-Sainte-Croix Basilica, as the church was then called, on the ruins of a Roman temple. The Normans destroyed the abbey when they besieged Paris in 885-886AD. The abbey and its church were rebuilt between 990 and 1021, however, were transformed over the centuries.</p>
      </section>
      <section id='Middle Ages'>
-         <h3>Middle Ages</h3>
+         <h3>Middle Ages (12th-15th centuries)</h3>
          <p>The Louvre. Under the Franks Paris flourished. In 845 the Vikings raided Paris. The French king paid them 7,000 pounds of silver to leave. But from the 11th century onward Paris prospered again. In the Middle Ages Paris grew rapidly and it became one of the largest towns in Europe. Its population probably reached 200,000 (that might seem small to us but it was huge by Medieval standards). King Philippe-Auguste (1180-1223) built a wall around Paris. He also built the Louvre fortress. Originally built as the Louvre castle in the late 12th to 13th century under Philip II. Remnants of the fortress are visible in the basement of the museum. Now the biggest and most visited museum in world.</p>
      </section>
      <section id='Fortifications'>
-         <h3>Fortifications</h3>
+         <h3>Construction of la Bastille</h3>
          <p>Place de la Bastille. Between 1356 and 1383, King Charles V built a new wall of fortifications around the city. He also built the Bastille, a large fortress guarding the Porte Saint-Antoine at the eastern end of Paris, and an imposing new fortress at Vincennes, east of city. The Place de la Bastille is a square in Paris where the Bastille prison stood until the storming of the Bastille and its subsequent physical destruction between 14 July 1789 and 14 July 1790 during the French Revolution. No vestige of the prison remains. The July Column (Colonne de Juillet) which commemorates the events of the July Revolution (1830) stands at the center of the square. The structure was converted into a state prison in the 17th century by Richelieu, who was king Louis XIII's chief minister. At that time it primarily housed political prisoners, but also religious prisoners, "seditious" writers, and young rakes held at the request of their families.</p>
 		 </section>
      <section id='Gothic Style'>
-         <h3>Gothic Style</h3>
+         <h3>Building of Notre Dame Cathedral</h3>
          <p>In the 12th and 13th centuries religious architecture flourished. The first stone of the choir of the cathedral of Notre Dame de Paris was laid in 1163, and the altar was consecrated in 1182. The cathedral was the heart of Catholic Paris for seven centuries and it remains the heart of the city today. One of the finest examples of French Gothic architecture and among the first buildings in the world to use the flying buttress, the Notre Dame Cathedral is known for its sublime balance, with its facade vertically balancing its 69-metre twin towers with the decorated galleries’ horizontal banding. While undergoing renovation and restoration, the roof of Notre-Dame caught fire on the evening of 15 April 2019. Burning for around 15 hours, the cathedral sustained serious damage.</p>
 		 </section>
      <section id='Sainte Chapelle'>
-         <h3>Sainte Chapelle</h3>
+         <h3>Sainte Chapelle (13th century)</h3>
          <p>A jewel of the Rayonnant Gothic period, the 13th-century Sainte-Chapelle chapel is most famous for its 1113 stained-glass windows depicting scenes from the Old and New Testaments. The chapel was originally commissioned by King Louis IX, built to hold the French Catholic Church’s most prized relics, such as the Crown of Thorns. Sainte-Chapelle is a designated UNESCO world heritage site.</p>
 		 </section>
      <section id='University of Paris'>
-         <h3>University of Paris</h3>
+         <h3>Paris as a centre of learning</h3>
          <p>Under Kings Louis VI and Louis VII, Paris became one of the principal centers of learning in Europe. Students, scholars and monks flocked to the city from England, Germany and Italy to engage in intellectual exchanges, to teach and be taught.  The University of Paris was originally organised in the mid-12th century as a guild or corporation of students and teachers. It was recognised by King Philip II in 1200 and officially recognised by Pope Innocent III, who had studied there, in 1215.</p>
 		 </section>
      <section id='100 years war'>
-         <h3>100 Years War</h3>
+         <h3>100 Years War (14th century)</h3>
          <p>In the middle of the 14th century, Paris was struck by two great catastrophes: the Bubonic plague and the Hundred Years' War. In the first epidemic of the plague in 1348-1349, forty to fifty thousand Parisians died, a quarter of the population. Towards th end of the 100 years war, on the 8th September - Joan of Arc, fighting for King Charles VII, tries and fails to retake Paris from the English. She is wounded outside the Porte Saint-Honoré (a city gate in Paris, the main entry point from the west). The English did not leave Paris until 1436, when Charles VII was finally able to return. Many areas of the capital of his kingdom were in ruins, and a hundred thousand of its inhabitants, half the population, had left the city.</p>
 		 </section>
      <section id='Hotel de Ville'>
-         <h3>Hotel de Ville</h3>
-         <p>By 1500, Paris had regained its former prosperity, and the population reached 250,000. Each new king of France added buildings, bridges and fountains to embellish his capital, most of them in the new Renaissance style imported from Italy. On 15 July 1533, King Francis I laid the foundation stone for the first Hôtel de Ville, the city hall of Paris. It was designed by his favourite Italian architect, Domenico da Cortona, who also designed the Château de Chambord in the Loire Valley for the king. The Hôtel de Ville was not finished until 1628.</p>
+         <h3>Paris Prospers (15th-16th century)</h3>
+         <p>Hôtel de Ville. By 1500, Paris had regained its former prosperity, and the population reached 250,000. Each new king of France added buildings, bridges and fountains to embellish his capital, most of them in the new Renaissance style imported from Italy. On 15 July 1533, King Francis I laid the foundation stone for the first Hôtel de Ville, the city hall of Paris. It was designed by his favourite Italian architect, Domenico da Cortona, who also designed the Château de Chambord in the Loire Valley for the king. The Hôtel de Ville was not finished until 1628.</p>
 		 </section>
      <section id='Pont Neuf'>
-         <h3>Pont Neuf</h3>
-         <p>Paris suffered greatly during the wars of religion of the 16th century; a third of the Parisians fled, many houses were destroyed, and the grand projects of the Louvre, the Hôtel de Ville, and the Tuileries Palace were unfinished. Henry IV took away the independence of the city government and ruled Paris directly through royal officers. Henry IV's building projects for Paris were managed by a Protestant, the Duke of Sully, his forceful superintendent of buildings and minister of finances who was named Grand Master of Artillery in 1599. Henry IV recommenced the construction of the Pont Neuf, started by Henry III in 1578, but left unfinished during the wars of religion. It was finished between 1600 and 1607.</p>
+         <h3>Religious wars of the 16th century</h3>
+         <p>Pont Neuf. Paris suffered greatly during the wars of religion of the 16th century; a third of the Parisians fled, many houses were destroyed, and the grand projects of the Louvre, the Hôtel de Ville, and the Tuileries Palace were unfinished. Henry IV took away the independence of the city government and ruled Paris directly through royal officers. Henry IV's building projects for Paris were managed by a Protestant, the Duke of Sully, his forceful superintendent of buildings and minister of finances who was named Grand Master of Artillery in 1599. Henry IV recommenced the construction of the Pont Neuf, started by Henry III in 1578, but left unfinished during the wars of religion. It was finished between 1600 and 1607.</p>
 		 </section>
      <section id='Luxembourg Palace'>
-         <h3>Luxembourg Palace</h3>
-         <p> Henri IV was assassinated on 14 May 1610 by François Ravaillac, a Catholic fanatic. After his death, Henry IV's widow Marie de Medicis decided to build her own residence, the Luxembourg Palace (1615–1630), modelled after the Pitti Palace in her native Florence. As well as housing royals, the Palace has had a number of functions: it was the original royal art gallery and was even used as a prison during the French Revolution. From the beginning of the 19th century, however, it has mainly been used as the seat of the French Senate.</p>
+         <h3>Assassination of Henri IV and the Luxembourg Palace (1610)</h3>
+         <p> Luxembourg Palace. Henri IV was assassinated on 14 May 1610 by François Ravaillac, a Catholic fanatic. After his death, Henry IV's widow Marie de Medicis decided to build her own residence, the Luxembourg Palace (1615–1630), modelled after the Pitti Palace in her native Florence. As well as housing royals, the Palace has had a number of functions: it was the original royal art gallery and was even used as a prison during the French Revolution. From the beginning of the 19th century, however, it has mainly been used as the seat of the French Senate.</p>
 		 </section>
      <section id='Les Invalides'>
-         <h3>Les Invalides</h3>
+         <h3>Les Invalides (late 17th century)</h3>
          <p>In the late 17th century the crown passed to Louis XIV when he was a child. Parisian politics forced him and his mother to flee Paris on two occasions giving him a lifelong distrust of Paris. His royal residence became the Palace in Versailles. Despite his suspicion, Paris prospered, reaching a population of between 400,000 and 500,000. The appointed a new Superintendent of Buildings, Jean-Baptiste Colbert, who began an ambitious building programme to make Paris the successor to ancient Rome. One of the many buildings commissioned by Colbert was the iconic Les Invalides. Les Invalides is a huge complex of buildings that include a hospital and retirement home for war veterans and features monuments and museums that tell the military history of France. The great emperor Napoleon Bonaparte, the brilliant statesman and military leader who conquered much of Europe in the early 19th century, rests inside the Dôme des Invalides, along with some of France’s war heroes.</p>
 		 </section>
     <section id='Place de la Concorde'>
-         <h3>Place de la Concorde</h3>
-         <p>Between 1640 and 1789, Paris grew in population from 400,000 to 600,000. Under Louis XV, the city expanded westward. A new boulevard, the Champs-Élysées, was laid out, at one end a large square was created between 1766 and 1775, with an equestrian statue of Louis XV in the center. It was first called "Place Louis XV", then the "Place de la Révolution" after 10 August 1792, and finally the Place de la Concorde in 1795.</p>
+         <h3>Louis XV and the westward expansion of Paris</h3>
+         <p>Place de la Concorde. Between 1640 and 1789, Paris grew in population from 400,000 to 600,000. Under Louis XV, the city expanded westward. A new boulevard, the Champs-Élysées, was laid out, at one end a large square was created between 1766 and 1775, with an equestrian statue of Louis XV in the center. It was first called "Place Louis XV", then the "Place de la Révolution" after 10 August 1792, and finally the Place de la Concorde in 1795.</p>
 		 </section>
     <section id='Café Procope'>
-         <h3>Café Procope</h3>
-         <p>In the 18th century, Paris was the center of an explosion of philosophic and scientific activity known as the Age of Enlightenment. The first café in Paris had been opened in 1672, and by the 1720s there were around 400 cafés in the city. They became meeting places for the city's writers and scholars. The Café Procope was frequented by Voltaire, Jean-Jacques Rousseau, Diderot and d’Alembert. They became important centres for exchanging news, rumors and ideas, often more reliable than the newspapers of the day.</p>
+         <h3>Age of Enlightenment (18th century)</h3>
+         <p>Café Procope. In the 18th century, Paris was the center of an explosion of philosophic and scientific activity known as the Age of Enlightenment. The first café in Paris had been opened in 1672, and by the 1720s there were around 400 cafés in the city. They became meeting places for the city's writers and scholars. The Café Procope was frequented by Voltaire, Jean-Jacques Rousseau, Diderot and d’Alembert. They became important centres for exchanging news, rumors and ideas, often more reliable than the newspapers of the day.</p>
 		 </section>
     <section id='The French Revolution'>
-         <h3>The French Revolution </h3>
+         <h3>The French Revolution (1789-1799)</h3>
          <p>This 10 year bloodshed that cost thousands of French lives, was what ultimately ended the absolute monarchy of Louis XVI and the feudal system – establishing a republic led by Napoleon Bonaparte. Influenced by Enlightenment ideals, the French people rose against the system in an attempt to achieve sovereignty, political and social rights. Even though it was a very costly war in terms of human losses, and not all objectives were achieved, the civilians succeeded in showing how the power of their union could change the fate of their country’s politics. On July 14th, 1789 civilians took over La Bastille in Paris, the place where the state stored its guns and ammunition, as well as political prisoners, marking the beginning of the revolution. This upheaval led to a period of instability that lasted until 1799, as people from both the cities and countryside went out to the streets in violent outbreaks unlike anything ever seen before, tired as they were of being exploited by a monarchy incapable of improving the country’s economic situation. The tremendous repercussions in all aspects of society and politics, make the French Revolution one of the most important events in history, and Paris was its center stage.</p>
 		 </section>
      <section id='Arc de Triomphe'>
-         <h3>Arc de Triomphe</h3>
+         <h3>Emperor Napoleon (early 19th century)</h3>
          <p>After he crowned himself Emperor on 2 December 1804, Napoleon began a series of projects to make Paris into an imperial capital to rival ancient Rome. The first and biggest of these monuments was the Arc de Triomphe proudly stands guard at the centre of Place Charles de Gaulle. The intricately sculpted monument was commissioned in 1806 to commemorate the victory of Napoléon’s armies at Austerlitz in 1805 and today honours everyone who fought and died in the service of the country during the French Revolutionary and Napoleonic Wars. The names of French generals and victories inscribed on its surfaces. The Tomb of the Unknown Soldier from World War I also lies beneath the triumphal arch’s vault.</p>
 		 </section>
      <section id='Palais Garnier'>
-         <h3>Palais Garnier</h3>
+         <h3>Napoleon I - First elected President of France (1848)</h3>
          <p>In December 1848, Louis-Napoleon Bonaparte, the nephew of Napoleon I, became the first elected President of France, winning seventy-four percent of the vote. Napoleon began by enlarging the city limits beyond the twelve arrondissements established in 1795. The towns around Paris had resisted becoming part of the city, fearing higher taxes; Napoleon used his new imperial power to annex them, adding eight new arrondissements to the city and bringing it to its present size. Over the next seventeen years, Napoleon entirely transformed the appearance of Paris. On such addition, was the Palais Garnier is a 1,979-seat opera house, built from 1861 to 1875 for the Paris Opera.</p>
 		 </section>
      <section id='First World War Demonstrations'>
-         <h3>First World War Demonstrations</h3>
+         <h3>First World War Demonstrations (August 1914)</h3>
          <p>The outbreak of the First World War in August 1914 saw patriotic demonstrations on the Place de la Concorde and at the Gare de l'Est and Gare du Nord as the mobilized soldiers departed for the front.</p>
 		 </section>
      <section id='Belle Époque (1871–1914)'>
@@ -128,11 +143,11 @@ margin-bottom: 200px;
          <p>Paris in the Belle Époque was a period in the history of the city between the years 1871 to 1914, from the beginning of the Third French Republic until the First World War. It saw the construction of the Eiffel Tower, the Paris Métro, the completion of the Paris Opera, and the beginning of the Basilica of Sacré-Cœur on Montmartre. Constructed in 1917 and consecrated in 1919 after World War I, the Basilica of the Sacred Heart of Paris or simply Sacre-Coeur is a double monument. On one hand, it serves as a national penance for France’s defeat in the Franco-Prussian War of 1870 and the Paris Commune of 171. On the other hand, this Roman Catholic church and basilica is dedicated to the Sacred Heart of Jesus and is thus a symbol of conservative moral order.</p>
 		 </section>
      <section id='The Crazy Years'>
-         <h3>The Crazy Years</h3>
+         <h3>The Crazy Years (Interwar period)</h3>
          <p>La Closerie Des Lilas (Cafe). During the interwar period, France couldn’t recover from the damages of battle, and the situation exacerbated as the Great Depression hit Paris in 1931. However, this period was also characterized by artistic and cultural development. It became an attractive and inspiring location for both national and international artists, thinkers and writers such as Pablo Picasso, Salvador Dali, Ernest Hemingway, and F. Scott Fitzgerald, who easily found inspiration in the cafes of Montparnasse and Saint Germain. The intellectual and cultural evolution, combined with economic improvement and peace efforts, gave the 1920s the title of the ‘Crazy Years.’</p>
 		 </section>
      <section id='German Soldiers Parade on the Champs Élysées'>
-         <h3>German Soldiers Parade on the Champs Élysées</h3>
+         <h3>German Soldiers Parade on the Champs Élysées (1940)</h3>
          <p>The French government departed Paris on June 10, and the Germans occupied the city on June 14. During the Occupation, the French Government moved to Vichy, and Paris was governed by the German military and by French officials approved by the Germans. German soldiers paraded down the Champs-Élysées on 14th June 1940</p>
 		 </section>
      <section id='Post-war'>
@@ -140,7 +155,7 @@ margin-bottom: 200px;
          <p>Les Deux Magots. The population of Paris did not return to its 1936 level until 1946 and grew to 2,850,000 by 1954, including 135,000 immigrants, mostly from Algeria, Morocco, Italy and Spain. The cultural life of Paris resumed, this time centered on the cafés of Saint-Germain-des-Prés: the Café de Flore, the Brasserie Lipp and Les Deux Magots, where the philosopher Jean-Paul Sartre and writer Simone de Beauvoir held court</p>
 		 </section>
      <section id='Grande Arche'>
-         <h3>Grande Arche</h3>
+         <h3>Paris as a financial hub</h3>
          <p>In the first part of the 21st century, the vitality of the Paris economy made it an important financial centre and influential global city. The Paris region, including the business centre of La Défense just outside the city limits, had a 2012 GDP of €612 billion (US$760 billion). In 2011 its GDP ranked second among the regions of Europe and its per-capita GDP was the 4th highest in Europe. In 2013 it hosted the world headquarters of 29 Fortune Global 500 companies, mostly in banking, finance, insurance and business services. La Grande Arche de la Défense ("The Great Arc of the Defense") is a monument and building in the business district of La Défense. It was designed to be a late-20th-century version of the Arc de Triomphe: a monument to humanity and humanitarian ideals rather than military victories. The construction of the monument began in 1985.</p>
 		 </section>
 		 
@@ -159,17 +174,365 @@ margin-bottom: 200px;
 </div>
 <script>
 
-
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3dpbmdjaGVuIiwiYSI6ImNqbjM5dDdscjM0dG0zcXF5OG42NWx1dXAifQ.uc5WAJCmE00Qgx5NOjNcLg';
 const map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/swingchen/cjvxtj39n3f8f1clqt4871qyb',
-  center: [2.340354, 48.837060],
-  zoom: 13,
-  bearing: 27,
-  pitch: 60
+ container: 'map',
+ style: 'mapbox://styles/swingchen/cjvxtj39n3f8f1clqt4871qyb',
+ center: [2.335023, 48.848100],
+ zoom: 14.3,
+ bearing: 27,
+ pitch: 60
 });
 
+map.on('load', function() {
+ 
+
+
+var geojson = {
+   "type": "FeatureCollection",
+   "features": [
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3475,48.854722 ]
+    },
+    "properties": {
+    "ID":1,
+    "Event":"Parisii",
+    "image":"<img src=\"Images/ile de la cite2.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3528,48.8451 ]
+    },
+    "properties": {
+    "ID":2,
+    "Event":"Romans",
+    "image":"<img src=\"Images/arenes de lutece.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.334444,48.853889 ]
+    },
+    "properties": {
+    "ID":3,
+    "Event":"Franks",
+    "image":"<img src=\"Images/abbey.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3376,48.8606 ]
+    },
+    "properties": {
+    "ID":4,
+    "Event":"Middle Ages",
+    "image":"<img src=\"Images/louvre.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [2.369028,48.853020]
+    },
+    "properties": {
+    "ID":5,
+    "Event":"Fortifications",
+    "image":"<img src=\"Images/la_bastille.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3499,48.853 ]
+    },
+    "properties": {
+    "ID":6,
+    "Event":"Gothic Style",
+    "image":"<img src=\"Images/notre dame.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.345,48.8554 ]
+    },
+    "properties": {
+    "ID":7,
+    "Event":"Sainte Chapelle",
+    "image":"<img src=\"Images/sainte chapelle.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.340556,48.851111 ]
+    },
+    "properties": {
+    "ID":8,
+    "Event":"University of Paris",
+    "image":"<img src=\"Images/sorbonne.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.34027778,48.86194444 ]
+    },
+    "properties": {
+    "ID":9,
+    "Event":"100 years war",
+    "image":"<img src=\"Images/porte saint honoure.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.352222,48.856389 ]
+    },
+    "properties": {
+    "ID":10,
+    "Event":"Hotel de Ville",
+    "image":"<img src=\"Images/hotel de ville.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3413,48.857 ]
+    },
+    "properties": {
+    "ID":11,
+    "Event":"Pont Neuf",
+    "image":"<img src=\"Images/pont neuf.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3373,48.8483 ]
+    },
+    "properties": {
+    "ID":12,
+    "Event":"Luxembourg Palace",
+    "image":"<img src=\"Images/luxembourg palace.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3126,48.8551 ]
+    },
+    "properties": {
+    "ID":13,
+    "Event":"Les Invalides",
+    "image":"<img src=\"Images/les invalides.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3212,48.8656 ]
+    },
+    "properties": {
+    "ID":14,
+    "Event":"Place de la Concorde",
+    "image":"<img src=\"Images/place de la concorde.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.338811,48.852496 ]
+    },
+    "properties": {
+    "ID":15,
+    "Event":"Caf� Procope",
+    "image":"<img src=\"Images/cafe procope.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3692,48.8533 ]
+    },
+    "properties": {
+    "ID":16,
+    "Event":"The French Revolution ",
+    "image":"<img src=\"Images/place de la bastille.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.295,48.8738 ]
+    },
+    "properties": {
+    "ID":17,
+    "Event":"Arc de Triomphe",
+    "image":"<img src=\"Images/arc de triomphe.png\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3316,48.872 ]
+    },
+    "properties": {
+    "ID":18,
+    "Event":"Palais Garnier",
+    "image":"<img src=\"Images/palais_garnier_exterior.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3553,48.8809 ]
+    },
+    "properties": {
+    "ID":19,
+    "Event":"First World War Demonstrations ",
+    "image":"<img src=\"Images/gare du nord.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3431,48.8867 ]
+    },
+    "properties": {
+    "ID":20,
+    "Event":"Belle �poque�(1871�1914)",
+    "image":"<img src=\"Images/sacre coeur.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.33596,48.8401 ]
+    },
+    "properties": {
+    "ID":21,
+    "Event":"The Crazy Years ",
+    "image":"<img src=\"Images/la closerie des lilas.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.304897,48.8705 ]
+    },
+    "properties": {
+    "ID":22,
+    "Event":"German Soldiers Parade on the Champs �lys�es",
+    "image":"<img src=\"Images/champs elysees.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.3332,48.854 ]
+    },
+    "properties": {
+    "ID":23,
+    "Event":"Post-war",
+    "image":"<img src=\"Images/les deux magots.jpg\" >",
+    "icon":"\"marker\""
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ 2.235833,48.892778 ]
+    },
+    "properties": {
+    "ID":24,
+    "Event":"Grande Arche",
+    "image":"<img src=\"Images/grande arche de la defense.jpg\" >",
+    "icon":"\"marker\""
+    }
+  }
+]
+};
+
+geojson.features.forEach(function(marker) {
+
+  var popup = new mapboxgl.Popup()
+    .setHTML( marker.properties.image );
+
+  // create a HTML element for each feature
+  var el = document.createElement('div');
+  el.className = 'marker';
+
+  // make a marker for each feature and add to the map
+  const myMarker = new mapboxgl.Marker(el, {
+        offset: [0, -25]
+    })
+    .setLngLat(marker.geometry.coordinates)
+    .setPopup(popup)
+    .addTo(map);
+
+  const markerDiv = myMarker.getElement();  
+
+  markerDiv.addEventListener('mouseenter', () => myMarker.togglePopup());
+  markerDiv.addEventListener('mouseleave', () => myMarker.togglePopup());
+  });
+
+
+
+});
+                         
 var chapters = {
 'STARS': {
   center: [2.340354, 48.837060],
@@ -179,19 +542,21 @@ var chapters = {
 },
 'Parisii': {
 bearing: 27,
-center: [2.3528, 48.8451],
-zoom: 15.5,
-pitch: 20
+center: [ 2.3475, 48.854722],
+zoom: 16,
+pitch: 20,
+speed: 0.3
 },
 'Romans': {
 duration: 6000,
-center: [2.334444, 48.853889],
-bearing: 150,
-zoom: 15,
-pitch: 0
+center: [2.3528, 48.8451],
+bearing: 27,
+zoom: 17,
+pitch: 15,
+speed: 0.5
 },
 'Franks': {
-bearing: 90,
+bearing: 340,
 center: [2.334444, 48.853889],
 zoom: 16.5,
 speed: 0.6,
@@ -199,8 +564,9 @@ pitch: 40
 },
 'Middle Ages': {
 bearing: 90,
-center: [2.3376, 48.8606],
-zoom: 15
+center: [2.334109, 48.861457],
+zoom: 15,
+speed: 0.4
 },
 'Fortifications': {
 bearing: 45,
@@ -210,117 +576,137 @@ pitch: 20,
 speed: 0.5
 },
 'Gothic Style': {
-bearing: 180,
+bearing: 75,
 center: [2.3499, 48.853],
-zoom: 14.3
+zoom: 16.7,
+speed: 0.5,
+pitch: 60
 },
 'Sainte Chapelle': {
-bearing: 90,
+bearing: 75,
 center: [2.345, 48.8554],
 zoom: 17.3,
-pitch: 40
+pitch: 40,
+speed: 0.5
 },
 'University of Paris': {
 bearing: 90,
 center: [2.340556, 48.851111],
-zoom: 14.3,
-pitch: 20
+zoom: 15.5,
+pitch: 25,
+speed: 0.5
 },
 '100 years war': {
-bearing: 90,
+bearing: 111,
 center: [2.34027778, 48.86194444],
-zoom: 15.5,
-pitch: 20
+zoom: 16,
+pitch: 85,
+speed: 0.5
 },
 'Hotel de Ville': {
-bearing: 90,
+bearing: 75,
 center: [2.352222, 48.856389],
-zoom: 14.3,
-pitch: 20
+zoom: 15.5,
+pitch: 50,
+speed: 0.5
 },
 'Pont Neuf': {
-bearing: 90,
+bearing: 95,
 center: [2.3413, 48.857],
-zoom: 14.3,
-pitch: 20
+zoom: 17,
+pitch: 90,
+speed: 0.5
 },
 'Luxembourg Palace': {
-bearing: 90,
+bearing: 45,
 center: [2.3373, 48.8483],
-zoom: 14.3,
-pitch: 20
+zoom: 15.3,
+pitch: 40,
+speed: 0.5
 },
 'Les Invalides': {
-bearing: 90,
+bearing: 4,
 center: [2.3126, 48.8551],
-zoom: 14.3,
-pitch: 20
+zoom: 15,
+pitch: 60,
+speed: 0.5
 },
 'Place de la Concorde': {
-bearing: 90,
+bearing: 0,
 center: [2.3212, 48.8656],
-zoom: 14.3,
-pitch: 20
+zoom: 15,
+pitch: 50,
+speed: 0.5
 },
 'Café Procope': {
-bearing: 90,
+bearing: 75,
 center: [2.338811, 48.852496],
-zoom: 14.3,
-pitch: 20
+zoom: 17.3,
+pitch: 30,
+speed: 0.5
 },
 'The French Revolution': {
-bearing: 90,
+bearing: 15,
 center: [2.3692, 48.8533],
-zoom: 14.3,
-pitch: 20
+zoom: 15,
+pitch: 45,
+speed:0.5
 },
 'Arc de Triomphe': {
 bearing: 90,
 center: [2.295, 48.8738],
-zoom: 14.3,
-pitch: 20
+zoom: 15.2,
+pitch: 30,
+speed: 0.5
 },
 'Palais Garnier': {
-bearing: 90,
+bearing: 10,
 center: [2.3316, 48.872],
-zoom: 14.3,
-pitch: 20
+zoom: 15,
+pitch: 30,
+speed: 0.5
 },
 'First World War Demonstrations': {
 bearing: 90,
 center: [2.3553, 48.8809],
-zoom: 14.3,
-pitch: 20
+zoom: 14.8,
+pitch: 25,
+speed: 0.5
 },
 'Belle Époque (1871–1914)': {
-bearing: 90,
+bearing: 355,
 center: [2.3431, 48.8867],
-zoom: 14.3,
-pitch: 20
+zoom: 15.5,
+pitch: 40,
+speed: 0.3
 },
 'The Crazy Years': {
-bearing: 90,
+bearing: 350,
 center: [2.33596, 48.8401],
-zoom: 14.3,
-pitch: 20
+zoom: 17.2,
+pitch: 40,
+speed: 0.5
 },
 'German Soldiers Parade on the Champs Élysées': {
-bearing: 90,
+bearing: 115.5,
 center: [2.304897, 48.8705],
-zoom: 14.3,
-pitch: 20
+zoom: 15,
+pitch: 130,
+speed: 0.5
 },
 'Post-war': {
-bearing: 90,
+bearing: 10,
 center: [2.3332, 48.854],
-zoom: 14.3,
-pitch: 20
+zoom: 16.7,
+pitch: 40,
+speed: 0.5
 },
 'Grande Arche': {
 bearing: 90,
 center: [2.235833, 48.892778],
 zoom: 14.3,
-pitch: 20
+pitch: 20,
+speed: 0.5
 }
 };
  
