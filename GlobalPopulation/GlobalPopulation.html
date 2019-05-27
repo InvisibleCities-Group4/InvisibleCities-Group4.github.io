@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>Annual average daily flow (AADF) in London</title>
+  <title>Global Population Change over Time</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
@@ -23,7 +23,7 @@
         <div class='session' id='sliderbar'>
             <label><h2>Year: <span id='slider-value'>1800</span></h2></label>
             <table><tr><td>
-                <input id='slider' type='range' min='1200' max='2015' step='5' value='1875' list='tickmarks'/>
+                <input id='slider' type='range' min='100' max='2015' step='5' value='1875' list='tickmarks'/>
                 <datalist id='tickmarks'>
             <option value='1200' label="1200"><option value="1400">
             <option value="1450"><option value="1700"><option value="1800"><option value="1875"><option value="1950"><option value="1980"><option value="2015" label="2015">
@@ -204,7 +204,7 @@ const map = new mapboxgl.Map({
     
     map.on('load', function(){
         
-        var filterYear = ['==',['number',['get','year']],1200];
+        var filterYear = ['==',['number',['get','Year']],1200];
         
         var filterFlow = ['>',['number',['get', 'Value']],0];
         
@@ -214,9 +214,9 @@ const map = new mapboxgl.Map({
             type:'circle',
             source: {
                 type: 'vector',
-                url: 'mapbox://sgcwan16.4egau77a'
+                url: 'mapbox://sgcwan16.7yxyljvt'
             },
-            'source-layer': 'Population1200-2015NORMAL-8aabcx',
+            'source-layer': 'GlobalPopHistory-048izh',
             'layout': {
                 'visibility': 'visible'
             },
@@ -257,7 +257,7 @@ const map = new mapboxgl.Map({
          document.getElementById('slider').addEventListener('input', function(e) {
                 var year = parseInt(e.target.value, 10);
                 //filterBy(year);
-                filterYear = ['==',['number',['get','year']],year];
+                filterYear = ['==',['number',['get','Year']],year];
                 map.setFilter('Population', ['all', filterYear, filterFlow]);
                 document.getElementById('slider-value').innerText = year;
                 });
@@ -274,11 +274,11 @@ const map = new mapboxgl.Map({
         
         
         document.getElementById('layer').addEventListener('change', function(e){
-        var AADF = e.target.value;
-        if (AADF === 'all') {
+        var Cities = e.target.value;
+        if (Cities === 'all') {
             filterFlow = ['>',['number',['get', 'Value']],0];
-        } else if (AADF === 'major') {
-            filterFlow = ['>',['number',['get', 'Value']],500];
+        } else if (Cities === 'major') {
+            filterFlow = ['>',['number',['get', 'Value']],300];
         } 
         
         map.setFilter('Population',['all', filterYear, filterFlow]);
