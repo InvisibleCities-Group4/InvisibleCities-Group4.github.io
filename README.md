@@ -1,4 +1,4 @@
-# Invisible Cities - Paris throughout the Time
+# Invisible Cities - Paris throughout Time
 
 View website on https://invisiblecities-group4.github.io/
 
